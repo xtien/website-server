@@ -3,11 +3,13 @@ package nl.christine.websiteserver.controller;
 import nl.christine.websiteserver.model.Page;
 import nl.christine.websiteserver.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = {"https://pengo.christine.nl", "http://localhost:3000"}, maxAge = 14400)
 public class PageController {
 
     @Autowired
@@ -17,7 +19,7 @@ public class PageController {
     public Page GetPage(@PathVariable String site, @PathVariable String language, @PathVariable String page) {
 
         try {
-            Page p =  pageService.getPage(site, language, page);
+            Page p = pageService.getPage(site, language, page);
             return p;
         } catch (Exception e) {
             return null;
@@ -25,5 +27,3 @@ public class PageController {
     }
 
 }
-
-// java.lang.IllegalArgumentException: org.hibernate.hql.internal.ast.QuerySyntaxException: Page is not mapped [select a from Page a where a.site = :site AND a.language = :language AND a.page = :page]

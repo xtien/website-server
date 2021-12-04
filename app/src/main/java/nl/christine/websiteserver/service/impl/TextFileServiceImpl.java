@@ -29,7 +29,7 @@ public class TextFileServiceImpl implements TextFileService {
     private TextReader textReader;
 
     private String fileDirectory;
-    
+
     @PostConstruct
     public void init() {
         fileDirectory = properties.getProperty("pages_directory");
