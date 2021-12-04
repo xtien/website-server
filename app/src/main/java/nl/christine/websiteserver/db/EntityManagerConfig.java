@@ -31,7 +31,7 @@ public class EntityManagerConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan(new String[]{"nl.christine.schwartze.server.model"});
+        em.setPackagesToScan(new String[]{"nl.christine.websiteserver.model"});
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setPersistenceUnitName("defaultPU");

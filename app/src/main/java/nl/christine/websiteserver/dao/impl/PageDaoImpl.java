@@ -15,18 +15,23 @@ public class PageDaoImpl implements PageDao {
     private EntityManager em;
 
     @Override
-    public Page getPage(String site, String page) {
+    public Page getPage(String site, String language, String page) {
 
         TypedQuery<Page> query = em.createQuery(
                 "select a from " + Page.class.getSimpleName()
-                        + " a where " + Page.SITE + " = :site AND " + Page.ID + " = :page",
+                        + " a where a.site = :site AND a.language = :language AND a.page = :page",
                 Page.class);
 
         try {
-            return query.setParameter("site", site).setParameter("page", page).getSingleResult();
+            return query.setParameter("site", site).setParameter("language", language).setParameter("page", page).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public void persist(Page page) {
+        em.persist(page);
     }
 }

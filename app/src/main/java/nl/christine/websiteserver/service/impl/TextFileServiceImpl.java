@@ -29,33 +29,30 @@ public class TextFileServiceImpl implements TextFileService {
     private TextReader textReader;
 
     private String fileDirectory;
-
-
+    
     @PostConstruct
     public void init() {
         fileDirectory = properties.getProperty("pages_directory");
+        if(fileDirectory.endsWith("/")){
+            fileDirectory = fileDirectory.substring(0, fileDirectory.length()-1);
+        }
     }
 
     @Override
     public String getText(String site, String language, String page) {
-        String fileName = fileDirectory + "/" + site + "/" + language + "/" + page + ".txt";
-        String result = textReader.getText(fileName);
-        if (result == null) {
-            fileName = fileDirectory + "/" + site + "/" + defaultLanguage + "/" + page + ".txt";
-            result = textReader.getText(fileName);
-        }
-        if (result == null) {
-            result = "text file not found";
-        }
-        return result;
+        return getText("txt", site, language, page);
     }
 
     @Override
-    public String getPage(String chapterId, String pageId, String language) {
-        String fileName = fileDirectory + "/pages/" + language + "/" + chapterId + "/" + pageId + ".txt";
+    public String getTitle(String site, String language, String page) {
+        return getText("title", site, language, page);
+    }
+
+    private String getText(String type, String site, String language, String page) {
+        String fileName = fileDirectory + "/" + site + "/" + language + "/" + page + "." + type;
         String result = textReader.getText(fileName);
         if (result == null) {
-            fileName = fileDirectory + "/pages/" + defaultLanguage + "/" + chapterId + "/" + pageId + ".txt";
+            fileName = fileDirectory + "/" + site + "/" + defaultLanguage + "/" + page + "." + type;
             result = textReader.getText(fileName);
         }
         if (result == null) {

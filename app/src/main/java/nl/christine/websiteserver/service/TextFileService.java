@@ -12,5 +12,5 @@ public interface TextFileService {
 
     String getText(String type, String documentName, String language);
 
-    String getPage(String site, String language, String page) ;
+    String getTitle(String site, String language, String page);
 }

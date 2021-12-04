@@ -10,7 +10,8 @@ package nl.christine.websiteserver.properties;
 import nl.christine.websiteserver.ServerConstants;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -21,7 +22,7 @@ import java.util.Properties;
 @Component("myProperties")
 public class MyProperties {
 
-    private static final Logger log = Logger.getLogger(MyProperties.class);
+    private static final Logger log = LogManager.getLogger(MyProperties.class);
 
     private Properties properties;
     private String path;
