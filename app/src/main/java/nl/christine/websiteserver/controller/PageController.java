@@ -19,8 +19,7 @@ public class PageController {
     public Page GetPage(@PathVariable String site, @PathVariable String language, @PathVariable String page) {
 
         try {
-            Page p = pageService.getPage(site, language, page);
-            return p;
+            return pageService.getPage(site, language, page);
         } catch (Exception e) {
             return null;
         }

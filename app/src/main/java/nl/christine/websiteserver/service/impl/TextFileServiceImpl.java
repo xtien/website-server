@@ -56,7 +56,7 @@ public class TextFileServiceImpl implements TextFileService {
             result = textReader.getText(fileName);
         }
         if (result == null) {
-            result = "text file not found";
+            result = "";
         }
         return result;
     }

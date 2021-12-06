@@ -21,12 +21,16 @@ public class PageServiceImpl implements PageService {
     @Transactional
     public Page getPage(String site, String language, String pageId) {
         Page page = pageDao.getPage(site, language, pageId);
+        String title = textFileService.getTitle(site, language, pageId);
 
         if (page == null) {
             page = new Page(site, language, pageId);
-            String title = textFileService.getTitle(site, language, pageId);
             page.setTitle(title);
             pageDao.persist(page);
+        } else {
+            if (page.getTitle() == null || !page.getTitle().equals(title)) {
+                page.setTitle(title);
+            }
         }
 
         String text = textFileService.getText(site, language, pageId);

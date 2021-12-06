@@ -36,7 +36,7 @@ public class TextReaderImpl implements TextReader {
                 }
             } catch (Exception e) {
                 logger.error("Error getting home text", e);
-                result = "text file not found";
+                result = "";
             }
         } else {
             result = null;
