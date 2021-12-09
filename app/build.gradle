@@ -11,6 +11,9 @@ plugins {
     id 'application'
 }
 
+group = 'nl.christine'
+version = '0.0.1-SNAPSHOT'
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()

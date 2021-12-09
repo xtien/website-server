@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"https://pengo.christine.nl", "http://localhost:3000"}, maxAge = 14400)
+@CrossOrigin(origins = {"https://www.zaphod.nl", "https://pengo.christine.nl"}, maxAge = 14400)
 public class PageController {
 
     @Autowired
