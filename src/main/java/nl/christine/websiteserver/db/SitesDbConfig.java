@@ -24,9 +24,9 @@ public class SitesDbConfig {
     @Value("${spring.datasource.url}")
     private String url;
 
-    private String userName;
+    private final String userName;
 
-    private String password;
+    private final String password;
 
     @Value("${spring.datasource.driver-class-name}")
     private String driverClass;
