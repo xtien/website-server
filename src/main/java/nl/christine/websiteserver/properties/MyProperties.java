@@ -10,8 +10,8 @@ package nl.christine.websiteserver.properties;
 import nl.christine.websiteserver.ServerConstants;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +22,7 @@ import java.util.Properties;
 @Component("myProperties")
 public class MyProperties {
 
-    private static final Logger log = LogManager.getLogger(MyProperties.class);
+    private static final Logger log = LoggerFactory.getLogger(MyProperties.class);
 
     private Properties properties;
     private String path;
@@ -50,7 +50,7 @@ public class MyProperties {
                 properties.load(is);
 
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getMessage());
             }
         }
         for (Object key : properties.keySet()) {
@@ -93,7 +93,7 @@ public class MyProperties {
         try (FileOutputStream fos = new FileOutputStream(new File(path))) {
             properties.store(fos, "** " + dateFormat.format(new Date()));
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 }
