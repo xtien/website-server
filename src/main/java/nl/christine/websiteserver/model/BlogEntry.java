@@ -1,5 +1,6 @@
 package nl.christine.websiteserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rometools.rome.feed.synd.SyndCategory;
 import com.rometools.rome.feed.synd.SyndContent;
@@ -27,6 +28,7 @@ public class BlogEntry {
     private static final String TITLE = "title";
     private static final String TEXT = "text";
     private static final String SUBJECT = "category";
+    private static final String ID = "id";
 
     @Transient
     private final String defaultLanguage = "nl";
@@ -35,12 +37,17 @@ public class BlogEntry {
 
     @Id
     @Column
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long _id;
 
     @Column(name = SITE)
     @JsonProperty(SITE)
     private String site;
+
+    @Column(name = ID)
+    @JsonProperty(ID)
+    private String id;
 
     @Column(name = LANGUAGE)
     @JsonProperty(LANGUAGE)
@@ -113,5 +120,41 @@ public class BlogEntry {
 
     public long getDateMillis() {
         return dateMillis;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long get_id() {
+        return _id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setDate(long dateMillis) {
+        this.dateMillis = dateMillis;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getDateString() {
+        return dateString;
     }
 }

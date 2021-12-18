@@ -20,27 +20,40 @@ public class BlogDaoImpl implements BlogDao {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a order by a.id desc ",
+                        + " a order by a._id desc ",
                 BlogEntry.class);
 
-        return query.setMaxResults(1).getSingleResult();
+        BlogEntry entry =  query.setMaxResults(1).getSingleResult();
+        return entry;
+    }
+
+    @Override
+    public BlogEntry getBlog(String site, String language, String id) {
+
+        TypedQuery<BlogEntry> query = em.createQuery(
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a where id = :id ",
+                BlogEntry.class);
+
+        BlogEntry entry =  query.setParameter("id", id).getSingleResult();
+        return entry;
     }
 
     @Override
     public void insert(BlogEntry blogEntry) {
         em.persist(blogEntry);
-
     }
 
     @Override
     public BlogEntry getPrevious(String site, String language, long id) {
-
-        return getBlog(Math.max(0, id));
+        BlogEntry entry =  getBlog(Math.max(0, id - 1));
+        return entry;
     }
 
     @Override
     public BlogEntry getBlog(long id) {
-        return em.find(BlogEntry.class, id);
+        BlogEntry entry =  em.find(BlogEntry.class, id);
+        return entry;
     }
 
     @Override

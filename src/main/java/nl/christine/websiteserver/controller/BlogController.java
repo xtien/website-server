@@ -21,7 +21,18 @@ public class BlogController {
     public BlogEntry getBlog(@PathVariable String site, @PathVariable String language) {
 
         try {
-            return blogService.getBlog(site, language);
+            BlogEntry entry = blogService.getBlog(site, language);
+            return entry;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    @GetMapping("/blog/{site}/{language}/{id}")
+    public BlogEntry getBlogForId(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
+
+        try {
+            BlogEntry entry = blogService.getBlog(site, language, id);
+            return entry;
         } catch (Exception e) {
             return null;
         }
@@ -31,12 +42,8 @@ public class BlogController {
     public BlogEntry getPrevious(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
-            if (NumberUtils.isCreatable(id)) {
-                BlogEntry entry = blogService.getPrevious(site, language, Long.parseLong(id));
-                return entry;
-            } else {
-                return blogService.getBlog(site, language);
-            }
+            BlogEntry entry = blogService.getPrevious(site, language, Long.parseLong(id));
+            return entry;
         } catch (Exception e) {
             return null;
         }
@@ -46,11 +53,7 @@ public class BlogController {
     public BlogEntry getNext(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
-            if (NumberUtils.isCreatable(id)) {
-                return blogService.getNext(site, language, Long.parseLong(id));
-            } else {
-                return blogService.getBlog(site, language);
-            }
+            return blogService.getNext(site, language, Long.parseLong(id));
         } catch (Exception e) {
             return null;
         }

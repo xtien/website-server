@@ -12,6 +12,9 @@ public interface BlogService {
     @Transactional
     BlogEntry getBlog(String site, String language);
 
+    @Transactional
+    BlogEntry getBlog(String site, String language, String id);
+
     BlogEntry getNext(String site, String language, long id);
 
     @Transactional
@@ -22,4 +25,6 @@ public interface BlogService {
     List<BlogEntry> getBlogs(String site, String language, int count);
 
     List<BlogEntry> getBlogs(String site, String language, long id, int count);
+
+    BlogEntry edit(String site, String language, BlogEntry entry);
 }
