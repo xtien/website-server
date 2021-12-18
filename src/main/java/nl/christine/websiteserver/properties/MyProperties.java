@@ -54,7 +54,7 @@ public class MyProperties {
             }
         }
         for (Object key : properties.keySet()) {
-            log.debug("prop: " + key + " " + properties.getProperty((String) key));
+            log.debug("Fprop: " + key + " " + properties.getProperty((String) key));
         }
     }
 

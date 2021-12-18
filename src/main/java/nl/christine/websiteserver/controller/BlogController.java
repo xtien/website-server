@@ -1,14 +1,12 @@
 package nl.christine.websiteserver.controller;
 
-import nl.christine.websiteserver.blog.BlogEntry;
-import nl.christine.websiteserver.model.Page;
+import com.rometools.rome.io.FeedException;
+import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
-import nl.christine.websiteserver.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @CrossOrigin(origins = {"https://zaphod.nl", "https://www.zaphod.nl", "https://pengo.christine.nl", "https://christine.nl", "https://www.christine.nl"}, maxAge = 14400)
@@ -18,7 +16,7 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping("/blog/{site}/{language}/{blogId}")
-    public BlogEntry GetPage(@PathVariable String site, @PathVariable String language, @PathVariable String blogId) {
+    public BlogEntry getPage(@PathVariable String site, @PathVariable String language, @PathVariable String blogId) {
 
         try {
             return blogService.getBlog(site, language, blogId);
@@ -27,4 +25,14 @@ public class BlogController {
         }
     }
 
+    @PostMapping("/blog/init")
+    public void init(){
+        try {
+            blogService.initBlog();
+        } catch (FeedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
