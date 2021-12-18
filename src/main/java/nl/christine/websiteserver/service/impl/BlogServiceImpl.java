@@ -20,12 +20,22 @@ public class BlogServiceImpl implements BlogService {
     RomeService romeService;
 
     @Override
-    public BlogEntry getBlog(String site, String language, String blogId) {
-        return blogDao.getBlog(site, language, blogId);
+    public BlogEntry getBlog(String site, String language) {
+        return blogDao.getBlog(site, language);
+    }
+
+    @Override
+    public BlogEntry getNext(String site, String language, long id) {
+        return blogDao.getNext(site, language, id);
     }
 
     @Override
     public void initBlog() throws FeedException, IOException {
         romeService.initBlog();
+    }
+
+    @Override
+    public BlogEntry getPrevious(String site, String language, long id) {
+        return blogDao.getPrevious(site, language, id);
     }
 }

@@ -16,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class RomeServiceImpl implements RomeService {
@@ -31,12 +34,14 @@ public class RomeServiceImpl implements RomeService {
     @Transactional
     @Override
     public void initBlog() throws IOException, FeedException {
-        File feed = new File(fileName);
-        final SyndFeedInput input = new SyndFeedInput();
-        SyndFeed syndFeed = input.build(new XmlReader(feed.toURI().toURL()));
-
         blogDao.clear();
 
-        syndFeed.getEntries().stream().forEach(e -> blogDao.insert(new BlogEntry(e)));
-     }
+        new SyndFeedInput()
+                .build(new XmlReader(new File(fileName).toURI().toURL()))
+                .getEntries()
+                .stream()
+                .map(e -> new BlogEntry(e))
+                .sorted(Comparator.comparingLong(BlogEntry::getDateMillis))
+                .forEach(e -> blogDao.insert(e));
+    }
 }

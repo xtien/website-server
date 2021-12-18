@@ -106,4 +106,8 @@ public class BlogEntry {
     public String getSite() {
         return site;
     }
+
+    public long getDateMillis() {
+        return dateMillis;
+    }
 }
