@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class BlogServiceImpl implements BlogService {
@@ -30,12 +31,22 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void initBlog() throws FeedException, IOException {
-        romeService.initBlog();
+    public BlogEntry getPrevious(String site, String language, long id) {
+        return blogDao.getPrevious(site, language, id);
     }
 
     @Override
-    public BlogEntry getPrevious(String site, String language, long id) {
-        return blogDao.getPrevious(site, language, id);
+    public List<BlogEntry> getBlogs(String site, String language, int count) {
+        return blogDao.getBlogs(site,language, count);
+    }
+
+    @Override
+    public List<BlogEntry> getBlogs(String site, String language, long id, int count) {
+        return blogDao.getBlogs(site,language, id, count);
+    }
+
+    @Override
+    public void initBlog() throws FeedException, IOException {
+        romeService.initBlog();
     }
 }

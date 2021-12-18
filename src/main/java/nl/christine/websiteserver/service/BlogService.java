@@ -5,6 +5,7 @@ import nl.christine.websiteserver.model.BlogEntry;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface BlogService {
 
@@ -17,4 +18,8 @@ public interface BlogService {
     void initBlog() throws FeedException, IOException;
 
     BlogEntry getPrevious(String site, String language, long l);
+
+    List<BlogEntry> getBlogs(String site, String language, int count);
+
+    List<BlogEntry> getBlogs(String site, String language, long id, int count);
 }

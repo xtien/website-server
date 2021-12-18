@@ -68,6 +68,10 @@ public class BlogEntry {
     @JsonProperty(SUBJECT)
     private String category;
 
+    public BlogEntry(){
+
+    }
+
     public BlogEntry(SyndEntry entry) {
         this.language = defaultLanguage;
         this.title = entry.getTitle();
