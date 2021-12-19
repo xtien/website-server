@@ -75,7 +75,7 @@ public class BlogEntry {
     @JsonProperty(SUBJECT)
     private String category;
 
-    public BlogEntry(){
+    public BlogEntry() {
 
     }
 
@@ -84,26 +84,35 @@ public class BlogEntry {
         this.title = entry.getTitle();
         this.site = defaultSite;
         this.text = "";
-         for (SyndContent s : entry.getContents()) {
-             if (s.getType().equals("html")) {
-                text += s.getValue().replace("christinenl.blog", "christine.nl");
+        for (SyndContent s : entry.getContents()) {
+            if (s.getType().equals("html")) {
+                if(s.getValue().contains("wp-content/uploads")){
+                    String b = "found";
+                }
+                text += s.getValue()
+                        .replaceAll("christinenl.blog/wp-content/uploads/[0-9]{4,4}/[0-9]{2,2}", "content.christine.nl/website-images")
+                        .replace("christinenl.blog", "christine.nl")
+                        .replace("christinenl.files.wordpress.com", "content.christine.nl")
+                        .replaceAll("content.christine.nl/[0-9]{4,4}/[0-9]{2,2}", "content.christine.nl/website-images")
+                 ;
+                String c = "found";
             }
         }
 
         List<Element> elements = entry.getForeignMarkup().stream().filter(d -> d.getName().equals("post_date")).collect(Collectors.toList());
-        if(elements.size() > 0){
+        if (elements.size() > 0) {
             dateString = elements.get(0).getValue();
             try {
-               dateMillis =  FastDateFormat.getInstance(dateFormat).parse(dateString).getTime();
+                dateMillis = FastDateFormat.getInstance(dateFormat).parse(dateString).getTime();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
-       List<SyndCategory> l = entry.getCategories().stream().filter(c -> c.getTaxonomyUri().equals("category")).collect(Collectors.toList());
-       if(l.size()> 0){
-           category = l.get(0).getName();
-       }
+        List<SyndCategory> l = entry.getCategories().stream().filter(c -> c.getTaxonomyUri().equals("category")).collect(Collectors.toList());
+        if (l.size() > 0) {
+            category = l.get(0).getName();
+        }
     }
 
     public String getLanguage() {
