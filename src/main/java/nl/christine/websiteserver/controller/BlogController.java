@@ -27,6 +27,7 @@ public class BlogController {
             return null;
         }
     }
+
     @GetMapping("/blog/{site}/{language}/{id}")
     public BlogEntry getBlogForId(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
@@ -59,21 +60,21 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/blogs/{site}/{language}/{id}/{count}")
-    public List<BlogEntry> getBlogs(@PathVariable String site, @PathVariable String language, @PathVariable long id, @PathVariable int count) {
+    @GetMapping("/blogs/{site}/{language}/{count}")
+    public List<BlogEntry> getBlogs(@PathVariable String site, @PathVariable String language, @PathVariable int count) {
 
         try {
-            return blogService.getBlogs(site, language, id, count);
+            return blogService.getBlogs(site, language, count);
         } catch (Exception e) {
             return null;
         }
     }
 
-    @GetMapping("/blogs/{site}/{language}/{count}")
-    public List<BlogEntry> getLatestBlogs(@PathVariable String site, @PathVariable String language, @PathVariable int count) {
+    @GetMapping("/all_blogs/{site}/{language}")
+    public List<BlogEntry> getAllBlogs(@PathVariable String site, @PathVariable String language) {
 
         try {
-            return blogService.getBlogs(site, language, count);
+            return blogService.getAllBlogs(site, language);
         } catch (Exception e) {
             return null;
         }

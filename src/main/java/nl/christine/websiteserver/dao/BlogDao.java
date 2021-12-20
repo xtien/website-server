@@ -10,6 +10,8 @@ public interface BlogDao {
 
     void insert(BlogEntry blogEntry);
 
+    List<BlogEntry> getAllBlogs(String site, String language);
+
     List<BlogEntry> getBlogs(String site, String language, int count);
 
     void clear();
@@ -19,8 +21,6 @@ public interface BlogDao {
     BlogEntry getBlog(long id);
 
     BlogEntry getNext(String site, String language, long id);
-
-    List<BlogEntry> getBlogs(String site, String language, long id, int count);
 
     BlogEntry getBlog(String site, String language, String id);
 }

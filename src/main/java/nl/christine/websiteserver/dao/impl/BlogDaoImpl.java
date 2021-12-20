@@ -66,23 +66,24 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     @Override
-    public List<BlogEntry> getBlogs(String site, String language, long id, int count) {
+    public List<BlogEntry> getBlogs(String site, String language, int count) {
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a order by a.id desc ",
+                        + " a order by a.dateMillis desc ",
                 BlogEntry.class);
 
         return query.setMaxResults(count).getResultList();
     }
 
+
     @Override
-    public List<BlogEntry> getBlogs(String site, String language, int count) {
+    public List<BlogEntry> getAllBlogs(String site, String language) {
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a order by a.id desc ",
+                        + " a order by a.dateMillis desc ",
                 BlogEntry.class);
 
-        return query.setMaxResults(count).getResultList();
+        return query.getResultList();
     }
 
     @Override

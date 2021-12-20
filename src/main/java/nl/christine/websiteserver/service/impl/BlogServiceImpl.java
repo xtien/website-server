@@ -60,23 +60,21 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     @Transactional
-    public List<BlogEntry> getBlogs(String site, String language, long id, int count) {
-        return blogDao.getBlogs(site, language, id, count);
+    public List<BlogEntry> getAllBlogs(String site, String language) {
+        return blogDao.getAllBlogs(site, language);
     }
 
     @Override
     @Transactional
     public BlogEntry edit(String site, String language, BlogEntry entry) {
-        entry.setDate(System.currentTimeMillis());
-        entry.setDateString(FastDateFormat.getInstance(dateFormat).format(entry.getDateMillis()));
         if (StringUtils.isEmpty(entry.getId())) {
+            entry.setDate(System.currentTimeMillis());
+            entry.setDateString(FastDateFormat.getInstance(dateFormat).format(entry.getDateMillis()));
             blogDao.insert(entry);
             entry.setId(Long.toString(entry.get_id()));
             return entry;
         } else {
             BlogEntry existingEntry = blogDao.getBlog(Integer.parseInt(entry.getId()));
-            existingEntry.setDate(entry.getDateMillis());
-            existingEntry.setDateString(entry.getDateString());
             if (StringUtils.isNotEmpty(entry.getTitle())) {
                 existingEntry.setTitle(entry.getTitle());
             }
