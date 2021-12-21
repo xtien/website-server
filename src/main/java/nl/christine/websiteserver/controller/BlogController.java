@@ -79,15 +79,4 @@ public class BlogController {
             return null;
         }
     }
-
-    @GetMapping("/blog/init")
-    public void init() {
-        try {
-            blogService.initBlog();
-        } catch (FeedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
