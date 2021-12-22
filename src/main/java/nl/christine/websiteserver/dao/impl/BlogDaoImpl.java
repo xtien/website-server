@@ -20,11 +20,10 @@ public class BlogDaoImpl implements BlogDao {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a order by a._id desc ",
+                        + " a where a.site = :site and a.language = :language order by a._id desc ",
                 BlogEntry.class);
 
-        BlogEntry entry =  query.setMaxResults(1).getSingleResult();
-        return entry;
+        return query.setParameter("site", site).setParameter("language", language).setMaxResults(1).getSingleResult();
     }
 
     @Override
@@ -32,12 +31,11 @@ public class BlogDaoImpl implements BlogDao {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a where id = :id ",
+                        + " a  where a.site = :site and a.language = :language and a.id = :id ",
                 BlogEntry.class);
 
-        BlogEntry entry =  query.setParameter("id", id).getSingleResult();
-        return entry;
-    }
+        return query.setParameter("site", site).setParameter("language", language).setParameter("id", id).getSingleResult();
+     }
 
     @Override
     public void insert(BlogEntry blogEntry) {
@@ -46,33 +44,37 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public BlogEntry getPrevious(String site, String language, long id) {
-        BlogEntry entry =  getBlog(Math.max(0, id - 1));
-        return entry;
+        TypedQuery<BlogEntry> query = em.createQuery(
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and a.language = :language and a._id < :id ",
+                BlogEntry.class);
+
+        return query.setParameter("site", site).setParameter("language", language).setParameter("id", id).setMaxResults(1).getSingleResult();
     }
 
     @Override
     public BlogEntry getBlog(long id) {
-        BlogEntry entry =  em.find(BlogEntry.class, id);
-        return entry;
+        return em.find(BlogEntry.class, id);
     }
 
     @Override
     public BlogEntry getNext(String site, String language, long id) {
-        BlogEntry blogEntry = getBlog(id + 1);
-        if (blogEntry == null) {
-            blogEntry = getBlog(id);
-        }
-        return blogEntry;
+        TypedQuery<BlogEntry> query = em.createQuery(
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and a.language = :language and a._id > :id ",
+                BlogEntry.class);
+
+        return query.setParameter("site", site).setParameter("language", language).setParameter("id", id).setMaxResults(1).getSingleResult();
     }
 
     @Override
     public List<BlogEntry> getBlogs(String site, String language, int count) {
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a order by a.dateMillis desc ",
+                        + " a where a.site = :site and a.language = :language order by a.dateMillis desc ",
                 BlogEntry.class);
 
-        return query.setMaxResults(count).getResultList();
+        return query.setParameter("site", site).setParameter("language", language).setMaxResults(count).getResultList();
     }
 
 
@@ -80,10 +82,10 @@ public class BlogDaoImpl implements BlogDao {
     public List<BlogEntry> getAllBlogs(String site, String language) {
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a order by a.dateMillis desc ",
+                        + " a where a.site = :site and a.language = :language order by a.dateMillis desc ",
                 BlogEntry.class);
 
-        return query.getResultList();
+        return query.setParameter("site", site).setParameter("language", language).getResultList();
     }
 
     @Override
