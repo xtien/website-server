@@ -2,6 +2,7 @@ package nl.christine.websiteserver.dao.impl;
 
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.dao.BlogDao;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
+@Profile("!test")
 public class BlogDaoImpl implements BlogDao {
 
     @PersistenceContext(unitName = "defaultPU")
@@ -23,7 +25,9 @@ public class BlogDaoImpl implements BlogDao {
                         + " a where a.site = :site and a.language = :language order by a._id desc ",
                 BlogEntry.class);
 
-        return query.setParameter("site", site).setParameter("language", language).setMaxResults(1).getSingleResult();
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setMaxResults(1).getSingleResult();
     }
 
     @Override
@@ -34,7 +38,10 @@ public class BlogDaoImpl implements BlogDao {
                         + " a  where a.site = :site and a.language = :language and a.id = :id ",
                 BlogEntry.class);
 
-        return query.setParameter("site", site).setParameter("language", language).setParameter("id", id).getSingleResult();
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setParameter("id", id)
+                .getSingleResult();
      }
 
     @Override
@@ -49,7 +56,11 @@ public class BlogDaoImpl implements BlogDao {
                         + " a  where a.site = :site and a.language = :language and a._id < :id ",
                 BlogEntry.class);
 
-        return query.setParameter("site", site).setParameter("language", language).setParameter("id", id).setMaxResults(1).getSingleResult();
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getSingleResult();
     }
 
     @Override
@@ -64,7 +75,11 @@ public class BlogDaoImpl implements BlogDao {
                         + " a  where a.site = :site and a.language = :language and a._id > :id ",
                 BlogEntry.class);
 
-        return query.setParameter("site", site).setParameter("language", language).setParameter("id", id).setMaxResults(1).getSingleResult();
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getSingleResult();
     }
 
     @Override
@@ -74,7 +89,10 @@ public class BlogDaoImpl implements BlogDao {
                         + " a where a.site = :site and a.language = :language order by a.dateMillis desc ",
                 BlogEntry.class);
 
-        return query.setParameter("site", site).setParameter("language", language).setMaxResults(count).getResultList();
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setMaxResults(count)
+                .getResultList();
     }
 
 
@@ -85,7 +103,9 @@ public class BlogDaoImpl implements BlogDao {
                         + " a where a.site = :site and a.language = :language order by a.dateMillis desc ",
                 BlogEntry.class);
 
-        return query.setParameter("site", site).setParameter("language", language).getResultList();
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .getResultList();
     }
 
     @Override

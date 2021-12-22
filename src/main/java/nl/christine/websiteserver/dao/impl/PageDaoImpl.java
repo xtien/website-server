@@ -2,6 +2,7 @@ package nl.christine.websiteserver.dao.impl;
 
 import nl.christine.websiteserver.dao.PageDao;
 import nl.christine.websiteserver.model.Page;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 @Component
+@Profile("!test")
 public class PageDaoImpl implements PageDao {
 
     @PersistenceContext(unitName = "defaultPU")
