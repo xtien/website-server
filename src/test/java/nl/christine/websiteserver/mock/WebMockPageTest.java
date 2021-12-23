@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(PageController.class)
 @ActiveProfiles("test")
-public class WebMockTest {
+public class WebMockPageTest {
 
     @Autowired
     private MockMvc mockMvc;
