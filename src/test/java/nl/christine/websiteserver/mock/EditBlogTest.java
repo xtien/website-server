@@ -2,6 +2,7 @@ package nl.christine.websiteserver.mock;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.christine.websiteserver.controller.BlogController;
+import nl.christine.websiteserver.controller.admin.BlogEditController;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -31,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Date: 1/21/19 2:32 PM
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(BlogController.class)
+@WebMvcTest(BlogEditController.class)
 @ActiveProfiles("test")
 public class EditBlogTest {
 
@@ -47,23 +49,21 @@ public class EditBlogTest {
 
     private BlogEntry blogEntry = new BlogEntry();
 
-    private String comment = "Blog Tekst";
-
     @Before
     public void setup() {
         blogEntry.setTitle("Blog Title");
         blogEntry.setText("Blog Tekst");
+        blogEntry.setLanguage("nl");
     }
 
     @Test
-    @WithMockUser(username = "user1", password = "pwd", roles = "ADMIN")
+    @WithMockUser(username = "user1", password = "pwd", roles = "USER", authorities = {"WRITE_PRIVILEGE"})
     public void editBlogReturnsBlog() throws Exception {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(blogEntry);
 
-
-        when(service.getBlog("zaphod", "nl")).thenReturn(blogEntry);
+        when(service.edit(eq("zaphod"), eq("nl"), any(BlogEntry.class))).thenReturn(blogEntry);
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/admin/edit_blog/zaphod/nl")
                         .sessionAttr(TOKEN_ATTR_NAME, csrfToken)
@@ -72,9 +72,10 @@ public class EditBlogTest {
                         .characterEncoding("UTF-8")
                         .content(json))
                 .andDo(print())
-                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.text.title").value("Blog Title"));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Blog Title"))
+        ;
 
-        verify(service).getBlog("zaphod", "nl");
+       verify(service).edit(eq("zaphod"), eq("nl"), any());
     }
 }

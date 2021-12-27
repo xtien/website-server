@@ -166,4 +166,8 @@ public class BlogEntry {
     public String getDateString() {
         return dateString;
     }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }
