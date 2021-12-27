@@ -59,7 +59,7 @@ public class BlogDaoImpl implements BlogDao {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and (a.language = :language OR a.language = 'nl') and a.dateMillis < :date order by a.dateMillis desc",
+                        + " a  where a.site = :site and a.language = :language and a.dateMillis < :date order by a.dateMillis desc",
                 BlogEntry.class);
 
         try {
@@ -85,7 +85,7 @@ public class BlogDaoImpl implements BlogDao {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and (a.language = :language OR a.language = 'nl') and a.dateMillis > :date order by a.dateMillis asc",
+                        + " a  where a.site = :site and a.language = :language and a.dateMillis > :date order by a.dateMillis asc",
                 BlogEntry.class);
 
         try {
