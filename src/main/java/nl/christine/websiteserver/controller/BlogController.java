@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"https://zaphod.nl", "https://www.zaphod.nl", "https://pengo.christine.nl", "https://christine.nl", "https://www.christine.nl"}, maxAge = 14400)
+@CrossOrigin(origins = {"https://zaphod.nl",
+        "https://www.zaphod.nl",
+        "https://pengo.christine.nl",
+        "https://christine.nl",
+        "https://www.christine.nl"}, maxAge = 14400)
 public class BlogController {
 
     @Autowired
