@@ -35,7 +35,7 @@ public class MyProperties {
 
     private void readProperties() {
 
-        path = "/home/christine" + File.separator + ServerConstants.settings_properties_file;
+        path = "/home/christine" + File.separator + ServerConstants.SETTINGS_PROPERTY_FILE;
 
         File settingsFile = new File(path);
 
@@ -43,12 +43,8 @@ public class MyProperties {
 
         if (settingsFile.exists()) {
 
-            try {
-
-                InputStream is = new FileInputStream(settingsFile);
-
+            try (InputStream is = new FileInputStream(settingsFile)) {
                 properties.load(is);
-
             } catch (IOException e) {
                 log.error(e.getMessage());
             }

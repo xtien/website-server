@@ -16,7 +16,7 @@ public class PageController {
     private PageService pageService;
 
     @GetMapping("/site/{site}/{language}/{page}")
-    public Page GetPage(@PathVariable String site, @PathVariable String language, @PathVariable String page) {
+    public Page getPage(@PathVariable String site, @PathVariable String language, @PathVariable String page) {
 
         try {
             return pageService.getPage(site, language, page);

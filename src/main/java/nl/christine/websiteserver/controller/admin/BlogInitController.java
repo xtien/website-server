@@ -21,11 +21,8 @@ public class BlogInitController {
     public void init(@RequestBody String language) {
         try {
             blogService.initBlog();
-        } catch (FeedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (FeedException | IOException e) {
             e.printStackTrace();
         }
-    }
-
+     }
 }

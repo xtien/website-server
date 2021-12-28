@@ -48,8 +48,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public BlogEntry getPrevious(String site, String language, long id) {
-        BlogEntry entry = blogDao.getPrevious(site, language, id);
-        return entry;
+        return blogDao.getPrevious(site, language, id);
     }
 
     @Override

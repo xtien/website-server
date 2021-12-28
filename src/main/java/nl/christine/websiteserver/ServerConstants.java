@@ -9,5 +9,8 @@ package nl.christine.websiteserver;
 
 public class ServerConstants {
 
-    public static final String settings_properties_file = "website-server.properties";
+    private ServerConstants(){
+    }
+
+    public static final String SETTINGS_PROPERTY_FILE = "website-server.properties";
 }

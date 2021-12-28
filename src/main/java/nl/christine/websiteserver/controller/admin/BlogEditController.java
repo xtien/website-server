@@ -1,5 +1,7 @@
 package nl.christine.websiteserver.controller.admin;
 
+import nl.christine.websiteserver.controller.helper.BlogEntryHelper;
+import nl.christine.websiteserver.controller.request.BlogEntryRequest;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,11 @@ public class BlogEditController {
     private BlogService blogService;
 
     @PostMapping("/admin/edit_blog/{site}/{language}")
-    public BlogEntry editBlog(@PathVariable String site, @PathVariable String language, @RequestBody BlogEntry request) {
+    public BlogEntry editBlog(@PathVariable String site, @PathVariable String language, @RequestBody BlogEntryRequest request) {
 
         try {
-            BlogEntry entry = blogService.edit(site, language, request);
-            return entry;
-        } catch (Exception e) {
+            return blogService.edit(site, language, BlogEntryHelper.toBlogEntry(request));
+         } catch (Exception e) {
             return null;
         }
     }

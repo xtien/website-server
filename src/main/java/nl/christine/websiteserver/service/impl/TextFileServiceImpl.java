@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 
 @Component("textFileService")
 public class TextFileServiceImpl implements TextFileService {
@@ -49,10 +50,10 @@ public class TextFileServiceImpl implements TextFileService {
     }
 
     private String getText(String type, String site, String language, String page) {
-        String fileName = fileDirectory + "/" + site + "/" + language + "/" + page + "." + type;
+        String fileName = fileDirectory + File.separator + site + File.separator + language + File.separator + page + "." + type;
         String result = textReader.getText(fileName);
         if (result == null) {
-            fileName = fileDirectory + "/" + site + "/" + defaultLanguage + "/" + page + "." + type;
+            fileName = fileDirectory + File.separator + site + File.separator + defaultLanguage + File.separator + page + "." + type;
             result = textReader.getText(fileName);
         }
         if (result == null) {

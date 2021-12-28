@@ -14,12 +14,13 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+
 @Entity
 @Table(name = "blog_entry")
 public class BlogEntry {
 
-    @Transient
-    String dateFormat = "yyyy-MM-dd hh:mm:ss";
+    private final static String dateFormat = "yyyy-MM-dd hh:mm:ss";
 
     public static final String SITE = "site";
     public static final String LANGUAGE = "language";
@@ -29,11 +30,8 @@ public class BlogEntry {
     private static final String TEXT = "text";
     private static final String SUBJECT = "category";
     private static final String ID = "id";
-
-    @Transient
-    private final String defaultLanguage = "nl";
-    @Transient
-    private final String defaultSite = "christine";
+    private static final String defaultLanguage = "nl";
+    private static final String defaultSite = "christine";
 
     @Id
     @Column
@@ -68,6 +66,7 @@ public class BlogEntry {
     @Column(name = TEXT)
     @JsonProperty(TEXT)
     @Lob
+    @SuppressWarnings("deprecation")
     @Type(type = "org.hibernate.type.TextType")
     private String text;
 
@@ -86,7 +85,7 @@ public class BlogEntry {
         this.text = "";
         for (SyndContent s : entry.getContents()) {
             if (s.getType().equals("html")) {
-                if(s.getValue().contains("wp-content/uploads")){
+                if (s.getValue().contains("wp-content/uploads")) {
                     String b = "found";
                 }
                 text += s.getValue()
@@ -94,7 +93,7 @@ public class BlogEntry {
                         .replace("christinenl.blog", "christine.nl")
                         .replace("christinenl.files.wordpress.com", "content.christine.nl")
                         .replaceAll("content.christine.nl/[0-9]{4,4}/[0-9]{2,2}", "content.christine.nl/website-images")
-                 ;
+                ;
                 String c = "found";
             }
         }
@@ -110,7 +109,7 @@ public class BlogEntry {
         }
 
         List<SyndCategory> l = entry.getCategories().stream().filter(c -> c.getTaxonomyUri().equals("category")).collect(Collectors.toList());
-        if (l.size() > 0) {
+        if (!isEmpty(l.size())) {
             category = l.get(0).getName();
         }
     }
@@ -169,5 +168,9 @@ public class BlogEntry {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

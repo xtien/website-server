@@ -1,7 +1,7 @@
 package nl.christine.websiteserver.dao.impl;
 
-import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.dao.BlogDao;
+import nl.christine.websiteserver.model.BlogEntry;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -18,26 +18,26 @@ public class BlogDaoImpl implements BlogDao {
     @PersistenceContext(unitName = "defaultPU")
     private EntityManager em;
 
+    private static final String SELECT = "select a from ";
+
     @Override
     public BlogEntry getBlog(String site, String language) {
 
         TypedQuery<BlogEntry> query = em.createQuery(
-                "select a from " + BlogEntry.class.getSimpleName()
+                SELECT + BlogEntry.class.getSimpleName()
                         + " a where a.site = :site and (a.language = :language OR a.language = 'nl') order by a._id desc ",
                 BlogEntry.class);
 
-        BlogEntry entry = query.setParameter("site", site)
+        return query.setParameter("site", site)
                 .setParameter("language", language)
                 .setMaxResults(1).getSingleResult();
-
-        return entry;
     }
 
     @Override
     public BlogEntry getBlog(String site, String language, String id) {
 
         TypedQuery<BlogEntry> query = em.createQuery(
-                "select a from " + BlogEntry.class.getSimpleName()
+                SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and (a.language = :language OR a.language = 'nl') and a.id = :id ",
                 BlogEntry.class);
 
@@ -58,7 +58,7 @@ public class BlogDaoImpl implements BlogDao {
         BlogEntry entry = getBlog(id);
 
         TypedQuery<BlogEntry> query = em.createQuery(
-                "select a from " + BlogEntry.class.getSimpleName()
+                SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and a.language = :language and a.dateMillis < :date order by a.dateMillis desc",
                 BlogEntry.class);
 
@@ -84,7 +84,7 @@ public class BlogDaoImpl implements BlogDao {
         BlogEntry entry = getBlog(id);
 
         TypedQuery<BlogEntry> query = em.createQuery(
-                "select a from " + BlogEntry.class.getSimpleName()
+                SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and a.language = :language and a.dateMillis > :date order by a.dateMillis asc",
                 BlogEntry.class);
 
@@ -102,7 +102,7 @@ public class BlogDaoImpl implements BlogDao {
     @Override
     public List<BlogEntry> getBlogs(String site, String language, int count) {
         TypedQuery<BlogEntry> query = em.createQuery(
-                "select a from " + BlogEntry.class.getSimpleName()
+                SELECT + BlogEntry.class.getSimpleName()
                         + " a where a.site = :site and (a.language = :language OR a.language = 'nl') order by a.dateMillis desc ",
                 BlogEntry.class);
 
@@ -116,7 +116,7 @@ public class BlogDaoImpl implements BlogDao {
     @Override
     public List<BlogEntry> getAllBlogs(String site, String language) {
         TypedQuery<BlogEntry> query = em.createQuery(
-                "select a from " + BlogEntry.class.getSimpleName()
+                SELECT + BlogEntry.class.getSimpleName()
                         + " a where a.site = :site and (a.language = :language OR a.language = 'nl') order by a.dateMillis desc ",
                 BlogEntry.class);
 
