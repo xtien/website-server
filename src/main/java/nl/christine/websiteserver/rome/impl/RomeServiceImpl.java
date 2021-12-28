@@ -5,6 +5,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import nl.christine.websiteserver.dao.BlogDao;
 import nl.christine.websiteserver.model.BlogEntry;
+import nl.christine.websiteserver.properties.MyProperties;
 import nl.christine.websiteserver.rome.RomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
@@ -19,12 +21,18 @@ import java.util.Comparator;
 @Component
 public class RomeServiceImpl implements RomeService {
 
-    Logger logger = LoggerFactory.getLogger(RomeServiceImpl.class);
+    String fileName;
 
-    String fileName = "/home/christine/Documents/wordpress/christine.WordPress.2021-12-04.xml";
+    @Autowired
+    private MyProperties properties;
 
     @Autowired
     BlogDao blogDao;
+
+    @PostConstruct
+    public void init() {
+        fileName = properties.getProperty("wordpressexportfile");
+     }
 
     @Transactional
     @Override
@@ -35,7 +43,7 @@ public class RomeServiceImpl implements RomeService {
                 .build(new XmlReader(new File(fileName).toURI().toURL()))
                 .getEntries()
                 .stream()
-                .map(e -> new BlogEntry(e))
+                .map(BlogEntry::new)
                 .sorted(Comparator.comparingLong(BlogEntry::getDateMillis))
                 .forEach(e -> {
                     blogDao.insert(e);
@@ -43,3 +51,7 @@ public class RomeServiceImpl implements RomeService {
                 });
     }
 }
+
+
+
+
