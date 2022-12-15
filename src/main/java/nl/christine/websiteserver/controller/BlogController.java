@@ -1,6 +1,7 @@
 package nl.christine.websiteserver.controller;
 
 import com.rometools.rome.io.FeedException;
+import nl.christine.websiteserver.controller.request.CategoriesRequest;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -74,6 +75,16 @@ public class BlogController {
 
         try {
             return blogService.getAllBlogs(site, language);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    @PostMapping("/categories/")
+    public List<BlogEntry> getCategories(@RequestBody CategoriesRequest request) {
+
+        try {
+            List result =  blogService.getBlogsForCategories(request);
+            return result;
         } catch (Exception e) {
             return null;
         }

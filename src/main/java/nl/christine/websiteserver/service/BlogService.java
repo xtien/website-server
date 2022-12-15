@@ -1,6 +1,7 @@
 package nl.christine.websiteserver.service;
 
 import com.rometools.rome.io.FeedException;
+import nl.christine.websiteserver.controller.request.CategoriesRequest;
 import nl.christine.websiteserver.model.BlogEntry;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,4 +29,6 @@ public interface BlogService {
     List<BlogEntry> getAllBlogs(String site, String language);
 
     BlogEntry edit(String site, String language, BlogEntry entry);
+
+    List<BlogEntry> getBlogsForCategories(CategoriesRequest request);
 }

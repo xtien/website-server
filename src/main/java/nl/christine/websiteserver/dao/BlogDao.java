@@ -25,4 +25,6 @@ public interface BlogDao {
     BlogEntry getBlog(String site, String language, String id);
 
     List<BlogEntry> getPreviousList(String site, String language, long id);
+
+    List<BlogEntry> getBlogsForCategories(String site, String language, List<String> categories);
 }

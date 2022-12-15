@@ -1,6 +1,7 @@
 package nl.christine.websiteserver.service.impl;
 
 import com.rometools.rome.io.FeedException;
+import nl.christine.websiteserver.controller.request.CategoriesRequest;
 import nl.christine.websiteserver.dao.BlogDao;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.rome.RomeService;
@@ -91,6 +92,11 @@ public class BlogServiceImpl implements BlogService {
             }
             return existingEntry;
         }
+    }
+
+    @Override
+    public List<BlogEntry> getBlogsForCategories(CategoriesRequest request) {
+        return blogDao.getBlogsForCategories(request.getSite(), request.getLanguage(),request.getCategories());
     }
 
     @Override

@@ -70,29 +70,50 @@ public class BlogDaoImpl implements BlogDao {
                 .getSingleResult();
     }
 
+    @Override
+    public List<BlogEntry> getPreviousList(String site, String language, long id) {
+        TypedQuery<BlogEntry> query = em.createQuery(
+                SELECT + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and " + createLangQuery(language) + " and a._id < :id  order by a._id desc",
+                BlogEntry.class);
+
+        return query.setParameter("site", site)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getResultList();
+    }
+
+    @Override
+    public List<BlogEntry> getBlogsForCategories(String site, String language, List<String> categories) {
+        TypedQuery<BlogEntry> query = em.createQuery(
+                SELECT + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and " + createLangQuery(language) + " and " + createCategoriesQuery(categories) + " order by a._id desc",
+                BlogEntry.class);
+
+        return query.setParameter("site", site)
+                .getResultList();
+    }
+
     private String createLangQuery(String language) {
-        String LANG_QUERY = "a.language = :language ";
+        String LANG_QUERY = " a.language = :language ";
         if (ANY.equalsIgnoreCase(language)) {
             LANG_QUERY = "";
             for (String lang : supported_languages) {
                 LANG_QUERY += " or a.language = \'" + lang + "\' ";
             }
-            LANG_QUERY = LANG_QUERY.substring(4, LANG_QUERY.length());
+            LANG_QUERY = "(" + LANG_QUERY.substring(4, LANG_QUERY.length()) + " ) ";
         }
         return LANG_QUERY;
     }
 
-    @Override
-    public List<BlogEntry> getPreviousList(String site, String language, long id) {
-        TypedQuery<BlogEntry> query = em.createQuery(
-                SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and " + createLangQuery(language) + "e and a._id < :id  order by a._id desc",
-                BlogEntry.class);
+    private String createCategoriesQuery(List<String> categories) {
 
-        return query.setParameter("site", site)
-               .setParameter("id", id)
-                .setMaxResults(1)
-                .getResultList();
+        String query = " (";
+        for (String category : categories) {
+            query += " a.category = \'" + category + "\' or ";
+        }
+        query = query.substring(0, query.length() - 3) + ") ";
+        return query;
     }
 
     @Override
@@ -129,7 +150,6 @@ public class BlogDaoImpl implements BlogDao {
                 .getResultList();
         return result;
     }
-
 
     @Override
     public List<BlogEntry> getAllBlogs(String site, String language) {
