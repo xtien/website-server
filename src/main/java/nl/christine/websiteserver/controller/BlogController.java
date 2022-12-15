@@ -44,7 +44,7 @@ public class BlogController {
 
         try {
             return blogService.getPrevious(site, language, Long.parseLong(id));
-        } catch (Exception e) {
+         } catch (Exception e) {
             return null;
         }
     }

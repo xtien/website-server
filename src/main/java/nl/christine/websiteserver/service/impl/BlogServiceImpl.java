@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Transient;
 import java.io.IOException;
 import java.util.List;
@@ -42,14 +43,21 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public BlogEntry getNext(String site, String language, long id) {
-        return blogDao.getNext(site, language, id);
+        try{
+            return blogDao.getNext(site, language, id);
+        } catch (NoResultException nre){
+            return blogDao.getBlog(site,language,Long.toString(id));
+        }
     }
 
     @Override
     @Transactional
     public BlogEntry getPrevious(String site, String language, long id) {
-        BlogEntry entry = blogDao.getPrevious(site, language, id);
-        return entry;
+        try{
+            return  blogDao.getPrevious(site, language, id);
+        } catch (NoResultException nre){
+            return blogDao.getBlog(site,language,Long.toString(id));
+        }
     }
 
     @Override
