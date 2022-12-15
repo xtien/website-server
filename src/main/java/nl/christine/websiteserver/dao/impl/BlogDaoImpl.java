@@ -53,7 +53,7 @@ public class BlogDaoImpl implements BlogDao {
     public BlogEntry getPrevious(String site, String language, long id) {
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and a.language = :language and a._id < :id ",
+                        + " a  where a.site = :site and a.language = :language and a._id < :id order by a._id desc",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
@@ -61,6 +61,20 @@ public class BlogDaoImpl implements BlogDao {
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<BlogEntry> getPreviousList(String site, String language, long id) {
+        TypedQuery<BlogEntry> query = em.createQuery(
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and a.language = :language and a._id < :id  order by a._id desc",
+                BlogEntry.class);
+
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getResultList();
     }
 
     @Override
@@ -72,7 +86,7 @@ public class BlogDaoImpl implements BlogDao {
     public BlogEntry getNext(String site, String language, long id) {
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and a.language = :language and a._id > :id ",
+                        + " a  where a.site = :site and a.language = :language and a._id > :id order by a._id asc",
                 BlogEntry.class);
 
         return query.setParameter("site", site)

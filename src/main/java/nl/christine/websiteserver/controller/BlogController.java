@@ -43,8 +43,7 @@ public class BlogController {
     public BlogEntry getPrevious(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
-            BlogEntry entry = blogService.getPrevious(site, language, Long.parseLong(id));
-            return entry;
+            return blogService.getPrevious(site, language, Long.parseLong(id));
         } catch (Exception e) {
             return null;
         }
