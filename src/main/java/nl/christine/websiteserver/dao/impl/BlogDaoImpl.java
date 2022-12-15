@@ -58,8 +58,8 @@ public class BlogDaoImpl implements BlogDao {
         BlogEntry entry = getBlog(id);
 
         TypedQuery<BlogEntry> query = em.createQuery(
-                SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and a.language = :language and a.dateMillis < :date order by a.dateMillis desc",
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and a.language = :language and a._id < :id order by a._id desc",
                 BlogEntry.class);
 
         try {
@@ -74,6 +74,20 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     @Override
+    public List<BlogEntry> getPreviousList(String site, String language, long id) {
+        TypedQuery<BlogEntry> query = em.createQuery(
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and a.language = :language and a._id < :id  order by a._id desc",
+                BlogEntry.class);
+
+        return query.setParameter("site", site)
+                .setParameter("language", language)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getResultList();
+    }
+
+    @Override
     public BlogEntry getBlog(long id) {
         return em.find(BlogEntry.class, id);
     }
@@ -84,8 +98,8 @@ public class BlogDaoImpl implements BlogDao {
         BlogEntry entry = getBlog(id);
 
         TypedQuery<BlogEntry> query = em.createQuery(
-                SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and a.language = :language and a.dateMillis > :date order by a.dateMillis asc",
+                "select a from " + BlogEntry.class.getSimpleName()
+                        + " a  where a.site = :site and a.language = :language and a._id > :id order by a._id asc",
                 BlogEntry.class);
 
         try {
