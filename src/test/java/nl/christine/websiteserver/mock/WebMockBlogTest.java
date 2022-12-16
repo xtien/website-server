@@ -1,6 +1,7 @@
 package nl.christine.websiteserver.mock;
 
 import nl.christine.websiteserver.controller.BlogController;
+import nl.christine.websiteserver.controller.admin.BlogEditController;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
 import org.junit.Before;
