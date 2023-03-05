@@ -37,15 +37,14 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     @Override
-    public BlogEntry getBlog(String site, String language, String id) {
+    public BlogEntry getBlogForId(String site, String language, String id) {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and " + createLangQuery(language) + " and a.id = :id ",
+                        + " a  where a.site = :site and a.id = :id ",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-                .setParameter("language", language)
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -64,7 +63,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-                .setParameter("language", language)
+            //    .setParameter("language", language)
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .getSingleResult();
@@ -95,7 +94,7 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     private String createLangQuery(String language) {
-        String LANG_QUERY = " a.language = :language ";
+        String LANG_QUERY = " a.language = " + "'" + language + "'";
         if (ANY.equalsIgnoreCase(language)) {
             LANG_QUERY = "";
             for (String lang : supported_languages) {
@@ -129,7 +128,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-                .setParameter("language", language)
+        //        .setParameter("language", language)
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .getSingleResult();
@@ -146,6 +145,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         List<BlogEntry> result = query.setParameter("site", site)
+          //      .setParameter("language", language)
                 .setMaxResults(count)
                 .getResultList();
         return result;
@@ -160,7 +160,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-                .setParameter("language", language)
+           //     .setParameter("language", language)
                 .getResultList();
     }
 

@@ -14,7 +14,7 @@ public interface BlogService {
     BlogEntry getBlog(String site, String language);
 
     @Transactional
-    BlogEntry getBlog(String site, String language, String id);
+    BlogEntry getBlogForId(String site, String language, String id);
 
     BlogEntry getNext(String site, String language, long id);
 

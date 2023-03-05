@@ -37,8 +37,8 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     @Transactional
-    public BlogEntry getBlog(String site, String language, String id) {
-        return blogDao.getBlog(site, language, id);
+    public BlogEntry getBlogForId(String site, String language, String id) {
+        return blogDao.getBlogForId(site, language, id);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class BlogServiceImpl implements BlogService {
         try{
             return blogDao.getNext(site, language, id);
         } catch (NoResultException nre){
-            return blogDao.getBlog(site,language,Long.toString(id));
+            return blogDao.getBlogForId(site,language,Long.toString(id));
         }
     }
 
@@ -57,7 +57,7 @@ public class BlogServiceImpl implements BlogService {
         try{
             return  blogDao.getPrevious(site, language, id);
         } catch (NoResultException nre){
-            return blogDao.getBlog(site,language,Long.toString(id));
+            return blogDao.getBlogForId(site,language,Long.toString(id));
         }
     }
 

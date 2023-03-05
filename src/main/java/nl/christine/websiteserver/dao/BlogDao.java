@@ -22,7 +22,7 @@ public interface BlogDao {
 
     BlogEntry getNext(String site, String language, long id);
 
-    BlogEntry getBlog(String site, String language, String id);
+    BlogEntry getBlogForId(String site, String language, String id);
 
     List<BlogEntry> getPreviousList(String site, String language, long id);
 

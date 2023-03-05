@@ -33,7 +33,7 @@ public class BlogController {
     public BlogEntry getBlogForId(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
-            BlogEntry entry = blogService.getBlog(site, language, id);
+            BlogEntry entry = blogService.getBlogForId(site, language, id);
             return entry;
         } catch (Exception e) {
             return null;
