@@ -2,6 +2,7 @@ package nl.christine.websiteserver.dao.impl;
 
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.dao.BlogDao;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +24,13 @@ public class BlogDaoImpl implements BlogDao {
 
     private List<String> supported_languages = Arrays.asList(new String[]{"nl", "en"});
 
+    @Value("${defaultlanguage}")
+    private String defaultLanguage;
+
     @Override
     public BlogEntry getBlog(String site, String language) {
+
+        language = checkLanguage(language);
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
@@ -36,9 +42,17 @@ public class BlogDaoImpl implements BlogDao {
                 .setMaxResults(1).getSingleResult();
     }
 
+    private String checkLanguage(String language) {
+        if(!supported_languages.contains(language) && !language.equalsIgnoreCase("any")){
+            language =  defaultLanguage;
+        }
+        return language;
+    }
+
     @Override
     public BlogEntry getBlogForId(String site, String language, String id) {
 
+        language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and a.id = :id ",
@@ -57,6 +71,7 @@ public class BlogDaoImpl implements BlogDao {
     @Override
     public BlogEntry getPrevious(String site, String language, long id) {
 
+        language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and " + createLangQuery(language) + " and a._id < :id order by a._id desc",
@@ -71,6 +86,7 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public List<BlogEntry> getPreviousList(String site, String language, long id) {
+        language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and " + createLangQuery(language) + " and a._id < :id  order by a._id desc",
@@ -84,6 +100,7 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public List<BlogEntry> getBlogsForCategories(String site, String language, List<String> categories) {
+        language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and " + createLangQuery(language) + " and " + createCategoriesQuery(categories) + " order by a._id desc",
@@ -122,6 +139,7 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public BlogEntry getNext(String site, String language, long id) {
+        language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
                         + " a  where a.site = :site and " + createLangQuery(language) + " and a._id > :id order by a._id asc",
@@ -136,6 +154,7 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public List<BlogEntry> getBlogs(String site, String language, int count) {
+        language = checkLanguage(language);
 
         String q = SELECT + BlogEntry.class.getSimpleName()
                 + " a where a.site = :site and " + createLangQuery(language) + "  order by a._id desc ";
@@ -153,6 +172,7 @@ public class BlogDaoImpl implements BlogDao {
 
     @Override
     public List<BlogEntry> getAllBlogs(String site, String language) {
+        language = checkLanguage(language);
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
