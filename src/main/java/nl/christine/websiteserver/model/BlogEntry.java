@@ -68,7 +68,7 @@ public class BlogEntry {
     @Column(name = TEXT)
     @JsonProperty(TEXT)
     @Lob
-    @Type(type = "org.hibernate.type.TextType")
+ //   @Convert(converter = org.hibernate.type.NumericBooleanConverter.class)
     private String text;
 
     @Column(name = SUBJECT)
