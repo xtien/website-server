@@ -3,14 +3,12 @@ package nl.christine.websiteserver.controller.admin;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = {"https://zaphod.nl",
-        "https://www.zaphod.nl",
-        "https://pengo.christine.nl",
-        "https://christine.nl",
-        "https://www.christine.nl"}, maxAge = 14400)
 public class BlogEditController {
 
     @Autowired

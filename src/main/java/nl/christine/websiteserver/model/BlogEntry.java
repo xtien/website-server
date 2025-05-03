@@ -9,7 +9,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
 import org.hibernate.annotations.Type;
 import org.jdom2.Element;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;

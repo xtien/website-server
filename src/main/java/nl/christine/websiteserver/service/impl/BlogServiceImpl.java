@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
-import javax.persistence.Transient;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Transient;
 import java.io.IOException;
 import java.util.List;
 

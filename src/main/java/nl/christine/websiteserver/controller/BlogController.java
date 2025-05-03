@@ -1,18 +1,16 @@
 package nl.christine.websiteserver.controller;
 
-import com.rometools.rome.io.FeedException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.christine.websiteserver.controller.request.CategoriesRequest;
 import nl.christine.websiteserver.model.BlogEntry;
 import nl.christine.websiteserver.service.BlogService;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"https://zaphod.nl", "https://www.zaphod.nl", "https://pengo.christine.nl", "https://christine.nl", "https://www.christine.nl"}, maxAge = 14400)
+@Tag(name="blog")
 public class BlogController {
 
     @Autowired

@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasAuthority("WRITE_PRIVILEGE")
                 .antMatchers("/**").permitAll()
                 .anyRequest().permitAll()
+        //     .logoutSuccessHandler(logoutSuccessHandler())
         ;
     }
 }
