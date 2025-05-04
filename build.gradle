@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'nl.christine'
-version = '0.1.5-SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -20,7 +20,7 @@ ext {
     log4j2Version = "2.14.1"
     commonsLangVersion = "3.12.0"
     commonsIOVersion = "2.11.0"
-    postgresVersion = "42.3.3"
+    postgresVersion = "42.7.5"
     dbcp2Version = "2.13.0"
     swaggerVersion = "3.0.0"
     springDocVersion = "1.5.13"
@@ -31,11 +31,9 @@ ext {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter:$springBootVersion"
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: springBootVersion
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
     implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.1.0'
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    // implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: springBootVersion
-    //implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: springBootVersion
     implementation group: 'org.springframework.security', name: 'spring-security-test', version: springSecurityVersion
 
     implementation "org.springdoc:springdoc-openapi-ui:$springDocVersion"

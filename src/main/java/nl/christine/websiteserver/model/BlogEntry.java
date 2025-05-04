@@ -6,10 +6,13 @@ import com.rometools.rome.feed.synd.SyndCategory;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 import org.jdom2.Element;
 
 import jakarta.persistence.*;
+
+import java.sql.Types;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,7 +71,7 @@ public class BlogEntry {
     @Column(name = TEXT)
     @JsonProperty(TEXT)
     @Lob
- //   @Convert(converter = org.hibernate.type.NumericBooleanConverter.class)
+    @JdbcTypeCode(Types.LONGVARCHAR)
     private String text;
 
     @Column(name = SUBJECT)
