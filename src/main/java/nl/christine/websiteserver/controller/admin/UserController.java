@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class UserController {
 
-    Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserDetailsService userDetailsService;
 

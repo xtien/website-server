@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -38,11 +39,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     MyProperties properties;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void init() {
 
         userName = properties.getProperty("security_user");
-        userPassword = new BCryptPasswordEncoder().encode(properties.getProperty("security_password"));
+        userPassword = passwordEncoder.encode(properties.getProperty("security_password"));
 
         Collection<Role> roles = new LinkedList<>();
         Role role = new Role("ROLE_USER");
