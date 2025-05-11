@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name="pages")
+@Tag(name="Page")
 public class PageController {
 
     @Autowired

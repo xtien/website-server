@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.POST, "/**").anonymous()
+                        .requestMatchers(HttpMethod.POST, "/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()
