@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,8 +44,8 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     private String checkLanguage(String language) {
-        if(!supported_languages.contains(language) && !language.equalsIgnoreCase("any")){
-            language =  defaultLanguage;
+        if (!supported_languages.contains(language) && !language.equalsIgnoreCase("any")) {
+            language = defaultLanguage;
         }
         return language;
     }
@@ -78,7 +79,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-            //    .setParameter("language", language)
+                //    .setParameter("language", language)
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .getSingleResult();
@@ -108,6 +109,11 @@ public class BlogDaoImpl implements BlogDao {
 
         return query.setParameter("site", site)
                 .getResultList();
+    }
+
+    @Override
+    public void deleteBlog(String id) {
+        em.remove(getBlog(Long.parseLong(id)));
     }
 
     private String createLangQuery(String language) {
@@ -146,7 +152,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-        //        .setParameter("language", language)
+                //        .setParameter("language", language)
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .getSingleResult();
@@ -164,7 +170,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         List<BlogEntry> result = query.setParameter("site", site)
-          //      .setParameter("language", language)
+                //      .setParameter("language", language)
                 .setMaxResults(count)
                 .getResultList();
         return result;
@@ -180,7 +186,7 @@ public class BlogDaoImpl implements BlogDao {
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-           //     .setParameter("language", language)
+                //     .setParameter("language", language)
                 .getResultList();
     }
 

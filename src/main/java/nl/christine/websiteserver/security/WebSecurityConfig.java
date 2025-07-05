@@ -21,8 +21,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 // https://mkyong.com/spring-boot/spring-security-there-is-no-passwordencoder-mapped-for-the-id-null/
@@ -40,7 +38,6 @@ public class WebSecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -49,7 +46,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/admin/**").hasAuthority("WRITE_PRIVILEGE")
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()
                         // .requestMatchers(HttpMethod.DELETE, "/person/{id}").hasRole("ADMIN")
                         .anyRequest().authenticated()

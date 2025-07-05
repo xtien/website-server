@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Transient;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -44,20 +45,20 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public BlogEntry getNext(String site, String language, long id) {
-        try{
+        try {
             return blogDao.getNext(site, language, id);
-        } catch (NoResultException nre){
-            return blogDao.getBlogForId(site,language,Long.toString(id));
+        } catch (NoResultException nre) {
+            return blogDao.getBlogForId(site, language, Long.toString(id));
         }
     }
 
     @Override
     @Transactional
     public BlogEntry getPrevious(String site, String language, long id) {
-        try{
-            return  blogDao.getPrevious(site, language, id);
-        } catch (NoResultException nre){
-            return blogDao.getBlogForId(site,language,Long.toString(id));
+        try {
+            return blogDao.getPrevious(site, language, id);
+        } catch (NoResultException nre) {
+            return blogDao.getBlogForId(site, language, Long.toString(id));
         }
     }
 
@@ -96,7 +97,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogEntry> getBlogsForCategories(CategoriesRequest request) {
-        return blogDao.getBlogsForCategories(request.getSite(), request.getLanguage(),request.getCategories());
+        return blogDao.getBlogsForCategories(request.getSite(), request.getLanguage(), request.getCategories());
+    }
+
+    @Override
+    @Transactional
+    public void deleteBlog(String id) {
+        blogDao.deleteBlog(id);
     }
 
     @Override

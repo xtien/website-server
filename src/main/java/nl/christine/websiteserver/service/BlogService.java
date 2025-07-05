@@ -31,4 +31,6 @@ public interface BlogService {
     BlogEntry edit(String site, String language, BlogEntry entry);
 
     List<BlogEntry> getBlogsForCategories(CategoriesRequest request);
+
+    void deleteBlog(String id);
 }

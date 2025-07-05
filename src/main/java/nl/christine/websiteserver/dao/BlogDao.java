@@ -27,4 +27,6 @@ public interface BlogDao {
     List<BlogEntry> getPreviousList(String site, String language, long id);
 
     List<BlogEntry> getBlogsForCategories(String site, String language, List<String> categories);
+
+    void deleteBlog(String id);
 }

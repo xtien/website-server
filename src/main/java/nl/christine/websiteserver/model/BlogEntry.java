@@ -24,8 +24,8 @@ public class BlogEntry {
     @Transient
     String dateFormat = "yyyy-MM-dd hh:mm:ss";
 
-    public static final String SITE = "site";
-    public static final String LANGUAGE = "language";
+    private static final String SITE = "site";
+    private static final String LANGUAGE = "language";
     private static final String DATE = "date";
     private static final String DATE_STRING = "date_string";
     private static final String TITLE = "title";
@@ -89,7 +89,7 @@ public class BlogEntry {
         this.text = "";
         for (SyndContent s : entry.getContents()) {
             if (s.getType().equals("html")) {
-                if(s.getValue().contains("wp-content/uploads")){
+                if (s.getValue().contains("wp-content/uploads")) {
                     String b = "found";
                 }
                 text += s.getValue()
@@ -97,7 +97,7 @@ public class BlogEntry {
                         .replace("christinenl.blog", "christine.nl")
                         .replace("christinenl.files.wordpress.com", "content.christine.nl")
                         .replaceAll("content.christine.nl/[0-9]{4,4}/[0-9]{2,2}", "content.christine.nl/website-images")
-                 ;
+                ;
                 String c = "found";
             }
         }

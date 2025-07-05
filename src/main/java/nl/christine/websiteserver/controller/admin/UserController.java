@@ -7,6 +7,7 @@
 
 package nl.christine.websiteserver.controller.admin;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import nl.christine.websiteserver.controller.request.LogoutRequest;
 import nl.christine.websiteserver.controller.result.LoginResult;
 import nl.christine.websiteserver.controller.result.LogoutResult;
@@ -23,9 +24,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-public class UserController {
+@RestController
+@Tag(name = "login", description = "")public class UserController {
 
     @Autowired
     private UserDetailsService userDetailsService;

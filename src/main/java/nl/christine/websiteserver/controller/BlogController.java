@@ -16,7 +16,7 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    @GetMapping("/blog/{site}/{language}")
+    @GetMapping("/getBlog/{site}/{language}")
     public BlogEntry getBlog(@PathVariable String site, @PathVariable String language) {
 
         try {
@@ -27,7 +27,7 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/blog/{site}/{language}/{id}")
+    @GetMapping("/getBlogForId/{site}/{language}/{id}")
     public BlogEntry getBlogForId(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
@@ -38,7 +38,7 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/previous_blog/{site}/{language}/{id}")
+    @GetMapping("/getPrevious/{site}/{language}/{id}")
     public BlogEntry getPrevious(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
@@ -48,7 +48,7 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/next_blog/{site}/{language}/{id}")
+    @GetMapping("/getNext/{site}/{language}/{id}")
     public BlogEntry getNext(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
@@ -58,7 +58,7 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/blogs/{site}/{language}/{count}")
+    @GetMapping("/getBlogs/{site}/{language}/{count}")
     public List<BlogEntry> getBlogs(@PathVariable String site, @PathVariable String language, @PathVariable int count) {
 
         try {
@@ -68,7 +68,7 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/all_blogs/{site}/{language}")
+    @GetMapping("/getAllBlogs/{site}/{language}")
     public List<BlogEntry> getAllBlogs(@PathVariable String site, @PathVariable String language) {
 
         try {
@@ -77,7 +77,7 @@ public class BlogController {
             return null;
         }
     }
-    @PostMapping("/categories/")
+    @PostMapping("/getCategories/")
     public List<BlogEntry> getCategories(@RequestBody CategoriesRequest request) {
 
         try {
