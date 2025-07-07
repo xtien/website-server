@@ -52,7 +52,8 @@ public class BlogController {
     public BlogEntry getNext(@PathVariable String site, @PathVariable String language, @PathVariable String id) {
 
         try {
-            return blogService.getNext(site, language, Long.parseLong(id));
+            BlogEntry result = blogService.getNext(site, language, Long.parseLong(id));
+            return result;
         } catch (Exception e) {
             return null;
         }

@@ -31,15 +31,12 @@ public class BlogDaoImpl implements BlogDao {
     @Override
     public BlogEntry getBlog(String site, String language) {
 
-        language = checkLanguage(language);
-
         TypedQuery<BlogEntry> query = em.createQuery(
                 "select a from " + BlogEntry.class.getSimpleName()
-                        + " a where a.site = :site and a.language = :language order by a._id desc ",
+                        + " a where a.site = :site order by a._id desc ",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
-                .setParameter("language", language)
                 .setMaxResults(1).getSingleResult();
     }
 
@@ -75,7 +72,7 @@ public class BlogDaoImpl implements BlogDao {
         language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and " + createLangQuery(language) + " and a._id < :id order by a._id desc",
+                        + " a  where a.site = :site " + createLangQuery(language) + " and a._id < :id order by a._id desc",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
@@ -90,7 +87,7 @@ public class BlogDaoImpl implements BlogDao {
         language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and " + createLangQuery(language) + " and a._id < :id  order by a._id desc",
+                        + " a  where a.site = :site " + createLangQuery(language) + " and a._id < :id  order by a._id desc",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
@@ -104,7 +101,7 @@ public class BlogDaoImpl implements BlogDao {
         language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and " + createLangQuery(language) + " and " + createCategoriesQuery(categories) + " order by a._id desc",
+                        + " a  where a.site = :site " + createLangQuery(language) + " and " + createCategoriesQuery(categories) + " order by a._id desc",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
@@ -117,13 +114,18 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     private String createLangQuery(String language) {
-        String LANG_QUERY = " a.language = " + "'" + language + "'";
-        if (ANY.equalsIgnoreCase(language)) {
+        String LANG_QUERY = " and ";
+        if (language == null || language.isEmpty() || ANY.equalsIgnoreCase(language)) {
             LANG_QUERY = "";
-            for (String lang : supported_languages) {
-                LANG_QUERY += " or a.language = \'" + lang + "\' ";
+        } else {
+            LANG_QUERY = " a.language = " + "'" + language + "'";
+            if (ANY.equalsIgnoreCase(language)) {
+                LANG_QUERY = "";
+                for (String lang : supported_languages) {
+                    LANG_QUERY += " or a.language = \'" + lang + "\' ";
+                }
+                LANG_QUERY = "(" + LANG_QUERY.substring(4, LANG_QUERY.length()) + " ) ";
             }
-            LANG_QUERY = "(" + LANG_QUERY.substring(4, LANG_QUERY.length()) + " ) ";
         }
         return LANG_QUERY;
     }
@@ -148,7 +150,7 @@ public class BlogDaoImpl implements BlogDao {
         language = checkLanguage(language);
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a  where a.site = :site and " + createLangQuery(language) + " and a._id > :id order by a._id asc",
+                        + " a  where a.site = :site " + createLangQuery(language) + " and a._id > :id order by a._id asc",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
@@ -166,7 +168,7 @@ public class BlogDaoImpl implements BlogDao {
                 + " a where a.site = :site and " + createLangQuery(language) + "  order by a._id desc ";
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a where a.site = :site and " + createLangQuery(language) + "  order by a._id desc ",
+                        + " a where a.site = :site " + createLangQuery(language) + "  order by a._id desc ",
                 BlogEntry.class);
 
         List<BlogEntry> result = query.setParameter("site", site)
@@ -182,7 +184,7 @@ public class BlogDaoImpl implements BlogDao {
 
         TypedQuery<BlogEntry> query = em.createQuery(
                 SELECT + BlogEntry.class.getSimpleName()
-                        + " a where a.site = :site and " + createLangQuery(language) + " order by a._id desc ",
+                        + " a where a.site = :site " + createLangQuery(language) + " order by a._id desc ",
                 BlogEntry.class);
 
         return query.setParameter("site", site)
